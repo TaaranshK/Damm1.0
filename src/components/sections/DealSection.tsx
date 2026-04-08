@@ -1,32 +1,16 @@
 import { ChevronRight, Clock } from "lucide-react";
-import DealCard from "./DealCard";
-import food1 from "@/assets/food-1.jpg";
-import food2 from "@/assets/food-2.jpg";
-import food3 from "@/assets/food-3.jpg";
+import DealCard from "@/components/cards/DealCard";
+import { dealCards } from "@/data/home";
 
-const images = [food1, food2, food3];
+type Deal = (typeof dealCards)[number];
 
 interface DealSectionProps {
   title: string;
   showTimer?: boolean;
-  showFullCards?: boolean;
+  deals?: Deal[];
 }
 
-const DealSection = ({ title, showTimer = false, showFullCards = true }: DealSectionProps) => {
-  const deals = [0, 1, 2].map((i) => ({
-    image: images[i],
-    name: "Barbecue World",
-    location: "Gulmohar Street, Mumbai",
-    rating: 4.5,
-    dishes: "50+ dishes",
-    dessert: "Dessert included",
-    day: "Tuesday",
-    meal: "Dinner",
-    tablesLeft: 2,
-    dealEndMins: "17:45",
-    discount: "70% Discount",
-  }));
-
+export default function DealSection({ title, showTimer = false, deals = dealCards }: DealSectionProps) {
   return (
     <section className="py-6">
       <div className="flex items-center justify-between mb-5">
@@ -42,6 +26,7 @@ const DealSection = ({ title, showTimer = false, showFullCards = true }: DealSec
           </div>
         )}
       </div>
+      {/* Static cards for now; the data is already tuned to the design */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {deals.map((deal, idx) => (
           <DealCard key={idx} {...deal} />
@@ -49,6 +34,4 @@ const DealSection = ({ title, showTimer = false, showFullCards = true }: DealSec
       </div>
     </section>
   );
-};
-
-export default DealSection;
+}

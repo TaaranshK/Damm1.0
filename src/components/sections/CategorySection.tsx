@@ -1,18 +1,9 @@
-import breakfastImg from "@/assets/breakfast.jpg";
-import lunchImg from "@/assets/lunch.jpg";
-import dinnerImg from "@/assets/dinner.jpg";
+import { categoryCards } from "@/data/home";
 
-const categories = [
-  { name: "Break Fast", image: breakfastImg },
-  { name: "Lunch", image: lunchImg },
-  { name: "Dinner", image: dinnerImg },
-];
-
-const CategorySection = () => {
+export default function CategorySection() {
   return (
     <section className="py-12">
       <div className="flex flex-col md:flex-row items-center gap-10">
-        {/* Left text */}
         <div className="md:w-1/2">
           <h2 className="text-2xl md:text-3xl font-extrabold text-foreground leading-tight">
             The World doesn't lack supply,<br />
@@ -20,9 +11,8 @@ const CategorySection = () => {
           </h2>
         </div>
 
-        {/* Category cards */}
         <div className="md:w-1/2 flex gap-4 overflow-x-auto">
-          {categories.map((cat) => (
+          {categoryCards.map((cat) => (
             <div
               key={cat.name}
               className="flex-shrink-0 w-40 rounded-2xl overflow-hidden shadow-sm border border-border hover-scale cursor-pointer group"
@@ -42,6 +32,4 @@ const CategorySection = () => {
       </div>
     </section>
   );
-};
-
-export default CategorySection;
+}

@@ -1,72 +1,42 @@
 import { useState } from "react";
-import { Star, ChevronLeft, ChevronRight, ThumbsUp, Flag, Edit } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import AppPromoBanner from "@/components/AppPromoBanner";
-import Footer from "@/components/Footer";
-import restaurantHero from "@/assets/restaurant-hero.jpg";
-import food1 from "@/assets/food-1.jpg";
-import food2 from "@/assets/food-2.jpg";
-import food3 from "@/assets/food-3.jpg";
-import menuImg from "@/assets/menu-1.jpg";
+import { ChevronLeft, ChevronRight, Edit, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import AppPromoBanner from "@/components/sections/AppPromoBanner";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import ReviewCard from "@/components/restaurant/ReviewCard";
+import TabBar from "@/components/restaurant/TabBar";
+import { detailTabs, menuImages, photoImages, restaurantInfo, reviews } from "@/data/restaurant";
 
-const tabs = ["About", "Menu", "Photos", "Reviews"];
-
-const reviews = [
-  {
-    name: "Anant Sharma",
-    rating: 5,
-    date: "Dec 2025",
-    text: "Have a nice spread and big space. Liked poha, khamand, idli, have good desserts option. Khushhal and Rajesh, Santu provided great service.",
-    likes: 5,
-  },
-  {
-    name: "Anant Sharma",
-    rating: 5,
-    date: "Dec 2025",
-    text: "Have a nice spread and big space, liked poha, idli.",
-    likes: 0,
-  },
-  {
-    name: "Anant Sharma",
-    rating: 5,
-    date: "Dec 2025",
-    text: "Have a nice spread and big space. Liked poha, khamand, idli, have good desserts option. Khushhal and Rajesh, Santu provided great service.",
-    likes: 5,
-  },
-];
-
-const RestaurantDetail = () => {
-  const [activeTab, setActiveTab] = useState("About");
+export default function RestaurantDetail() {
+  const [activeTab, setActiveTab] = useState(detailTabs[0]);
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
 
       <div className="container mx-auto px-6 py-8">
-        {/* Header Card */}
         <div className="bg-card rounded-2xl border border-border overflow-hidden">
           <div className="flex flex-col md:flex-row">
-            {/* Left Info */}
             <div className="p-6 md:p-8 md:w-1/2 flex flex-col justify-center">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-8 bg-primary rounded-full" />
                 <div>
                   <div className="flex items-center gap-2">
                     <Star className="h-4 w-4 fill-primary text-primary" />
-                    <span className="text-sm font-semibold text-foreground">4.5</span>
-                    <span className="text-sm text-muted-foreground">(129 Reviews)</span>
+                    <span className="text-sm font-semibold text-foreground">{restaurantInfo.rating}</span>
+                    <span className="text-sm text-muted-foreground">({restaurantInfo.reviewCount} Reviews)</span>
                   </div>
                 </div>
               </div>
 
-              <h1 className="text-2xl md:text-3xl font-extrabold text-foreground mb-1">Barbeques Nation</h1>
-              <p className="text-sm text-muted-foreground mb-4">Near Rehman Sweets, South Delhi-110019</p>
+              <h1 className="text-2xl md:text-3xl font-extrabold text-foreground mb-1">{restaurantInfo.name}</h1>
+              <p className="text-sm text-muted-foreground mb-4">{restaurantInfo.address}</p>
 
               <div className="mb-4">
-                <p className="text-sm font-bold text-foreground">Last Minutes Deal</p>
-                <p className="text-lg font-extrabold text-foreground">Grab 70% Off on Dinner</p>
-                <p className="text-sm text-urgency font-semibold mt-1">Deal Ends in 17:45 Mins</p>
+                <p className="text-sm font-bold text-foreground">{restaurantInfo.dealLabel}</p>
+                <p className="text-lg font-extrabold text-foreground">{restaurantInfo.dealTitle}</p>
+                <p className="text-sm text-urgency font-semibold mt-1">Deal Ends in {restaurantInfo.dealEndsIn} Mins</p>
               </div>
 
               <Link
@@ -77,33 +47,17 @@ const RestaurantDetail = () => {
               </Link>
             </div>
 
-            {/* Right Images */}
             <div className="md:w-1/2 p-4">
               <div className="rounded-xl overflow-hidden aspect-[16/10]">
-                <img src={restaurantHero} alt="Barbeques Nation" className="w-full h-full object-cover" />
+                <img src={restaurantInfo.heroImage} alt={restaurantInfo.name} className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-0 mt-8 border-b border-border">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 py-3 text-sm font-semibold transition-colors border-b-2 ${
-                activeTab === tab
-                  ? "border-foreground text-foreground"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        {/* Tabs are visual for now; content stays static */}
+        <TabBar tabs={detailTabs} activeTab={activeTab} onChange={setActiveTab} />
 
-        {/* About */}
         <div className="py-6">
           <p className="text-sm text-muted-foreground leading-relaxed">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -111,12 +65,11 @@ const RestaurantDetail = () => {
           <button className="text-sm font-medium text-foreground mt-2 underline">View more</button>
         </div>
 
-        {/* Menu Section */}
         <div className="py-6">
           <h2 className="text-xl font-bold text-foreground mb-4">Menu</h2>
           <div className="relative">
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-              {[menuImg, menuImg, menuImg, menuImg].map((img, idx) => (
+              {menuImages.map((img, idx) => (
                 <div key={idx} className="flex-shrink-0 w-48 rounded-xl overflow-hidden shadow-sm border border-border">
                   <img src={img} alt={`Menu ${idx + 1}`} className="w-full h-64 object-cover" loading="lazy" />
                 </div>
@@ -131,11 +84,10 @@ const RestaurantDetail = () => {
           </div>
         </div>
 
-        {/* Photos Section */}
         <div className="py-6">
           <h2 className="text-xl font-bold text-foreground mb-4">Photos</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[food1, food2, food3, restaurantHero].map((img, idx) => (
+            {photoImages.map((img, idx) => (
               <div key={idx} className="relative rounded-xl overflow-hidden aspect-square group cursor-pointer">
                 <img
                   src={img}
@@ -154,7 +106,6 @@ const RestaurantDetail = () => {
           </div>
         </div>
 
-        {/* Reviews Section */}
         <div className="py-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-foreground">Reviews</h2>
@@ -165,31 +116,7 @@ const RestaurantDetail = () => {
           </div>
           <div className="space-y-4">
             {reviews.map((review, idx) => (
-              <div key={idx} className="border border-border rounded-xl p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-sm font-bold text-muted-foreground">
-                    {review.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-foreground">{review.name}</p>
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star key={i} className="h-3 w-3 fill-primary text-primary" />
-                      ))}
-                      <span className="text-xs text-muted-foreground ml-2">· {review.date}</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3">{review.text}</p>
-                <div className="flex items-center gap-4">
-                  <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                    <ThumbsUp className="h-3.5 w-3.5" /> {review.likes}
-                  </button>
-                  <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                    <Flag className="h-3.5 w-3.5" /> Report
-                  </button>
-                </div>
-              </div>
+              <ReviewCard key={idx} review={review} />
             ))}
           </div>
           <button className="mt-4 text-sm font-medium text-foreground hover:text-primary transition-colors">
@@ -202,6 +129,4 @@ const RestaurantDetail = () => {
       <Footer />
     </div>
   );
-};
-
-export default RestaurantDetail;
+}

@@ -1,7 +1,7 @@
-import { Star, Clock } from "lucide-react";
+import { Clock, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
-interface DealCardProps {
+export interface DealCardProps {
   image: string;
   name: string;
   location: string;
@@ -15,7 +15,7 @@ interface DealCardProps {
   discount: string;
 }
 
-const DealCard = ({
+export default function DealCard({
   image,
   name,
   location,
@@ -27,11 +27,10 @@ const DealCard = ({
   tablesLeft,
   dealEndMins,
   discount,
-}: DealCardProps) => {
+}: DealCardProps) {
   return (
     <Link to="/restaurant/1" className="block">
       <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden hover-scale cursor-pointer group">
-        {/* Image with overlay */}
         <div className="relative aspect-[4/3] overflow-hidden">
           <img
             src={image}
@@ -40,12 +39,13 @@ const DealCard = ({
             loading="lazy"
           />
           <div className="absolute bottom-0 left-0 p-3">
-            <span className="text-sm font-medium text-primary-foreground bg-primary/80 px-2 py-0.5 rounded">Grab</span>
+            <span className="text-sm font-medium text-primary-foreground bg-primary/80 px-2 py-0.5 rounded">
+              Grab
+            </span>
             <p className="text-xl font-extrabold text-primary-foreground drop-shadow-lg">{discount}</p>
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-4 space-y-2">
           <div className="flex items-center justify-between">
             <h3 className="font-bold text-foreground text-sm">{name}</h3>
@@ -56,7 +56,6 @@ const DealCard = ({
           </div>
           <p className="text-xs text-muted-foreground">{location}</p>
 
-          {/* Tags */}
           <div className="flex items-center gap-3">
             <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">{dishes}</span>
             <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">{dessert}</span>
@@ -64,9 +63,10 @@ const DealCard = ({
 
           <p className="text-xs text-muted-foreground">· {day}, {meal}</p>
 
-          {/* Urgency Strip */}
           <div className="flex items-center justify-between bg-muted rounded-lg px-3 py-2 mt-2">
-            <span className="text-xs font-bold text-success">{tablesLeft} table{tablesLeft > 1 ? "s" : ""} Left!</span>
+            <span className="text-xs font-bold text-success">
+              {tablesLeft} table{tablesLeft > 1 ? "s" : ""} Left!
+            </span>
             <span className="text-xs font-bold text-urgency flex items-center gap-1">
               <Clock className="h-3 w-3" />
               Deal Ends in {dealEndMins} mins
@@ -76,6 +76,4 @@ const DealCard = ({
       </div>
     </Link>
   );
-};
-
-export default DealCard;
+}
